@@ -9,7 +9,13 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.static(`${__dirname}/public`));
 
-app.use('/toDoList', require('./modules/routers/toDolist'));
+app.set('view engine', 'pug');
+
+app.use('/todo', require('./modules/routers/toDolist'));
+
+app.get('/', (req, res) => {
+    res.render('index');
+});
 
 const PORT = 3000;
 app.listen(PORT);

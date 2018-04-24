@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title To do list
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous")
+        link(rel="stylesheet", href="./styles/style.css")
+    body
+        .container
+            .row.justify-content-center
+                .col-md-4.text-center
+                    h3 To Do List
+            .row.justify-content-center
+                .col-md-6
+                    form(action="").js-form
+                        .form-group
+                            input.form-control(type="text", name="taskField", placeholder="Task" required)
+            .row.justify-content-center
+                .col-md-6
+                    ul.list-group.js-list
+    
+        script(src="./js/todo.js")
