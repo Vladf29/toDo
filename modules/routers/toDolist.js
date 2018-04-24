@@ -10,35 +10,42 @@ const {
 } = require('../helper/validator');
 
 router.route('/add')
-    .post(validate(schemas), async (req, res) => {
+    .post(validate(schemas.add), async (req, res) => {
         try {
             const result = await DB.add(req.body);
             res.send(result);
         } catch (err) {
-            res.status(400).send('Error')
+            res.status(400).send(err.message)
         }
     });
 
-router.route('/getAll')
+router.route('/all')
     .get(async (req, res) => {
         try {
             const result = await DB.getAll();
             res.json(result);
         } catch (err) {
-            res.status(400).send('Error');
+            res.status(400).send(err.message);
         }
     });
 
 router.route('/done')
+    .put(validate(schemas.id), async (req, res) => {
+        try {
+            const result = await DB.done(req.body.id);
+            res.send(result);
+        } catch (err) {
+            res.status(400).send(err.message);
+        }
+    })
 
 router.route('/delete')
-    .delete(async (req, res) => {
+    .delete(validate(schemas.id), async (req, res) => {
         try {
-            console.log(req.body);
-            const result = await DB.delete(req.body);
+            const result = await DB.delete(req.body.id);
             res.json(result);
         } catch (err) {
-            res.status(400).send();
+            res.status(400).send(err.message);
         }
     });
 

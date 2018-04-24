@@ -34,20 +34,34 @@ class DB {
         });
     }
     static delete(id) {
-        const id = new ObjectID(id);
+        const _id = new ObjectID(id);
         return new Promise((resolve, reject) => {
             MongoClient.connect(urldb, (err, client) => {
                 if (err) reject(err);
                 const db = client.db(namedb);
                 const collection = db.collection(collectiondb);
                 collection.findOneAndDelete({
-                    _id: id
+                    _id
                 }).then((res) => resolve(res), (err) => reject(err));
             });
         });
     }
     static done(id) {
-
+        const _id = new ObjectID(id);
+        return new Promise((resolve, reject) => {
+            MongoClient.connect(urldb, (err, client) => {
+                if (err) reject(err);
+                const db = client.db(namedb);
+                const collection = db.collection(collectiondb);
+                collection.findOneAndUpdate({
+                    _id
+                }, {
+                    $set: {
+                        done: true
+                    }
+                }).then((res) => resolve(res), (err) => reject(err));
+            });
+        })
     }
 }
 

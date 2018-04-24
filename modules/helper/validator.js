@@ -13,7 +13,12 @@ module.exports = {
         }
     },
     schemas: {
-        task: Joi.string().min(1).required(),
-        done: Joi.boolean().required(),
+        add: {
+            task: Joi.string().min(1).required(),
+            done: Joi.boolean().required(),
+        },
+        id: {
+            id: Joi.required(),
+        }
     }
 }
