@@ -35,6 +35,30 @@ function httpRequest(url = '', method = 'GET', header = [], data) {
     });
 }
 
+function addTaskToList(task = {}) {
+    if (!task) return;
+
+    const ul = document.querySelector('.js-list');
+    ul.innerHTML = '';
+    const tempBtns = `
+        <div class='btn-group btn-group-sm'>
+            <button class='btn btn-secondary' data-action='done'>Done</button>
+            <button class='btn btn-secondary' data-action='delete'>Delete</button>
+        </div>
+    `
+    if (checkType(task) === 'Array') {
+        task.forEach((item, ind) => {
+            const li = document.createElement('li');
+            const clses = ['list-group-item', 'list-group-item-action', 'd-flex', 'justify-content-between', 'align-items-center', 'js-item-task'];
+            li.classList.add(...clses);
+            li.setAttribute('data-id-task', item._id);
+            li.setAttribute('data-done', item.done);
+            li.innerHTML = `<span class='js-task'>${item.task}</span>${tempBtns}`
+            ul.appendChild(li);
+        });
+    }
+}
+
 async function downloadTasks() {
     try {
         const result = await httpRequest('/todo/all');
@@ -57,6 +81,7 @@ async function handlerFormAddTask(event) {
         });
         await httpRequest('/todo/add', 'POST', ['Content-Type', 'application/json'], data);
         downloadTasks();
+        this.elements['taskField'].value = '';
     } catch (err) {
         console.log(err.message);
     }
@@ -84,30 +109,5 @@ async function handlerList(event) {
         }
     } catch (err) {
         console.log(err.message);
-    }
-}
-
-function addTaskToList(task = {}) {
-    if (!task) return;
-
-    const ul = document.querySelector('.js-list');
-    ul.innerHTML = '';
-    const tempBtns = `
-        <div class='btn-group btn-group-sm'>
-            <button class='btn btn-secondary' data-action='done'>Done</button>
-            <button class='btn btn-secondary' data-action='delete'>Delete</button>
-            <button class='btn btn-secondary' data-action='edit'>Edit</button>
-        </div>
-    `
-    if (checkType(task) === 'Array') {
-        task.forEach((item, ind) => {
-            const li = document.createElement('li');
-            const clses = ['list-group-item', 'list-group-item-action', 'd-flex', 'justify-content-between', 'align-items-center', 'js-item-task'];
-            li.classList.add(...clses);
-            li.setAttribute('data-id-task', item._id);
-            li.setAttribute('data-done', item.done);
-            li.innerHTML = `<span class='js-task'>${item.task}</span>${tempBtns}`
-            ul.appendChild(li);
-        });
     }
 }

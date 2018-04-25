@@ -43,6 +43,7 @@ class DB {
                 collection.findOneAndDelete({
                     _id
                 }).then((res) => resolve(res), (err) => reject(err));
+                client.close();
             });
         });
     }
@@ -60,6 +61,7 @@ class DB {
                         done: true
                     }
                 }).then((res) => resolve(res), (err) => reject(err));
+                client.close();
             });
         })
     }

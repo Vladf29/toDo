@@ -6,3 +6,8 @@ body {
 .list-group-item {
     cursor: pointer;
 }
+
+.list-group-item[data-done=true] {
+    color: #155724;
+    background-color: #c3e6cb;
+}
